@@ -1,76 +1,120 @@
-// Smooth scroll to slide when clicking dots or nav links
-const dots = document.querySelectorAll(".dot");
-const slides = document.querySelectorAll(".slide");
+gsap.registerPlugin(ScrollTrigger);
 
-// Helper: scroll to a slide
-function scrollToSlide(id) {
-  const target = document.getElementById(id);
-  if (!target) return;
-  target.scrollIntoView({ behavior: "smooth" });
-}
-
-dots.forEach((dot) => {
-  dot.addEventListener("click", () => {
-    const id = dot.dataset.target;
-    scrollToSlide(id);
-  });
-});
-
-// Top nav links (anchor) – keep smooth scroll behavior
-document.querySelectorAll('.top-nav a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-    const id = link.getAttribute("href").substring(1);
-    scrollToSlide(id);
-  });
-});
-
-// Update active dot based on current slide in viewport
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        dots.forEach((dot) => {
-          dot.classList.toggle("active", dot.dataset.target === id);
-        });
-        // Update body background color based on slide data-bg
-        const bg = entry.target.getAttribute("data-bg");
-        if (bg) {
-          document.body.style.background =
-            "radial-gradient(circle at top, #151a3a 0, " + bg + " 55%)";
-        }
-      }
-    });
-  },
-  {
-    threshold: 0.55,
+// TIMELINE PRINCIPALE DELLA SLIDE 1
+const heroTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".slide-1",
+    start: "top top",
+    end: "+=150%",          // quanto “lungo” è l’effetto mentre scrolli
+    scrub: true,            // collega il tempo della timeline allo scroll
+    pin: true,              // la sezione resta fissa come uno slider
+    anticipatePin: 1
   }
-);
+});
 
-slides.forEach((slide) => observer.observe(slide));
+// Animazioni sequenziali (ognuna con il suo ritardo naturale nella timeline)
+heroTl
+  // leggero zoom del background
+  .from(".slide-bg", {
+    duration: 1.2,
+    scale: 1.15,
+    opacity: 0,
+    ease: "power2.out"
+  })
 
-// Parallax effect on scroll
-function handleParallax() {
-  const viewportHeight = window.innerHeight;
+  // buggy che entra da destra
+  .from(".hero-anim-6", {
+    duration: 1.2,
+    x: 250,
+    opacity: 0,
+    ease: "power3.out"
+  }, "-=0.5")
 
-  slides.forEach((slide) => {
-    const rect = slide.getBoundingClientRect();
-    const slideCenter = rect.top + rect.height / 2;
-    const viewportCenter = viewportHeight / 2;
+  // testo che entra dopo, uno dietro l'altro
+  .from(".hero-anim-1", {
+    duration: 0.6,
+    y: 40,
+    opacity: 0,
+    ease: "power3.out"
+  }, "-=0.3")
+  .from(".hero-anim-2", {
+    duration: 0.9,
+    y: 50,
+    opacity: 0,
+    ease: "power3.out"
+  }, "-=0.2")
+  .from(".hero-anim-3", {
+    duration: 0.9,
+    y: 40,
+    opacity: 0,
+    ease: "power2.out"
+  }, "-=0.1")
+  .from(".hero-anim-4", {
+    duration: 0.8,
+    y: 30,
+    opacity: 0,
+    ease: "power2.out"
+  }, "-=0.2")
+  .from(".hero-anim-5 span", {
+    duration: 0.6,
+    y: 25,
+    opacity: 0,
+    stagger: 0.12,
+    ease: "power2.out"
+  }, "-=0.3")
 
-    const distance = (slideCenter - viewportCenter) / viewportHeight;
+  // piccolo movimento finale (parallax) mentre continui a scrollare
+  .to(".buggy-img", {
+    duration: 1.2,
+    y: -60,
+    rotateY: 8,
+    ease: "power1.inOut"
+  }, ">-0.3")
+  .to(".hero-left", {
+    duration: 1.2,
+    y: 40,
+    opacity: 0.92,
+    ease: "power1.inOut"
+  }, "<");
 
-    slide.querySelectorAll(".layer").forEach((layer) => {
-      const speed = parseFloat(layer.dataset.speed) || 0;
-      const translateY = distance * speed * -120; // tweak strength here
-      layer.style.transform = `translate3d(0, ${translateY}px, 0)`;
+// PARALLAX LEGGERO CON IL MOUSE (solo desktop)
+const hero = document.querySelector(".slide-1");
+const buggy = document.querySelector(".buggy-img");
+const orbit = document.querySelector(".buggy-orbit");
+
+if (hero && buggy && orbit) {
+  hero.addEventListener("mousemove", (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+    gsap.to(buggy, {
+      x: x * 40,
+      y: y * 20 - 20,
+      rotateY: x * 12,
+      ease: "power2.out",
+      duration: 0.4
+    });
+
+    gsap.to(orbit, {
+      rotate: -16 + x * 10,
+      ease: "power2.out",
+      duration: 0.6
+    });
+  });
+
+  hero.addEventListener("mouseleave", () => {
+    gsap.to(buggy, {
+      x: 0,
+      y: -20,
+      rotateY: 8,
+      duration: 0.6,
+      ease: "power2.out"
+    });
+    gsap.to(orbit, {
+      rotate: -16,
+      duration: 0.6,
+      ease: "power2.out"
     });
   });
 }
-
-window.addEventListener("scroll", handleParallax);
-window.addEventListener("resize", handleParallax);
-
-// Initial call
-handleParallax();
