@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Artistic Parallax Slider</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo">Cloud<span>Dream</span></div>
+    <nav class="top-nav">
+      <a href="#slide-1">Home</a>
+      <a href="#slide-2">Concept</a>
+      <a href="#slide-3">Journey</a>
+      <a href="#slide-4">Contact</a>
+    </nav>
+  </header>
+
+  <div class="pagination">
+    <button class="dot active" data-target="slide-1"></button>
+    <button class="dot" data-target="slide-2"></button>
+    <button class="dot" data-target="slide-3"></button>
+    <button class="dot" data-target="slide-4"></button>
+  </div>
+
+  <main class="slides">
+    <!-- SLIDE 1 -->
+    <section class="slide" id="slide-1" data-bg="#06071a">
+      <div class="parallax">
+        <!-- BACKGROUND LAYER (gradient / stars) -->
+        <div class="layer layer-back" data-speed="0.1"></div>
+
+        <!-- MID LAYER (clouds) -->
+        <img
+          src="https://images.pexels.com/photos/158163/clouds-cloudporn-weather-lookup-158163.jpeg?auto=compress&cs=tinysrgb&w=1200"
+          alt="Clouds"
+          class="layer layer-mid"
+          data-speed="0.3"
+        />
+
+        <!-- FRONT LAYER (floating car / object placeholder) -->
+        <img
+          src="https://images.pexels.com/photos/1402787/pexels-photo-1402787.jpeg?auto=compress&cs=tinysrgb&w=800"
+          alt="Floating object"
+          class="layer layer-front"
+          data-speed="0.6"
+        />
+      </div>
+
+      <div class="slide-content">
+        <p class="eyebrow">Get lost in the sky</p>
+        <h1>Dream beyond the clouds</h1>
+        <p class="description">
+          Build an immersive hero section with layered parallax, smooth scrolling,
+          and bold typography that instantly grabs attention.
+        </p>
+        <div class="buttons">
+          <a href="#slide-2" class="btn primary">Scroll to Explore</a>
+          <a href="#slide-4" class="btn ghost">Contact</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide" id="slide-2" data-bg="#050914">
+      <div class="parallax">
+        <div class="layer layer-back stars" data-speed="0.1"></div>
+
+        <img
+          src="https://images.pexels.com/photos/2150/sky-space-dark-galaxy.jpg?auto=compress&cs=tinysrgb&w=1200"
+          alt="Galaxy"
+          class="layer layer-mid"
+          data-speed="0.25"
+        />
+
+        <img
+          src="https://images.pexels.com/photos/23769/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=800"
+          alt="Astronaut"
+          class="layer layer-front small"
+          data-speed="0.55"
+        />
+      </div>
+
+      <div class="slide-content">
+        <p class="eyebrow">Concept</p>
+        <h1>Vertical parallax storytelling</h1>
+        <p class="description">
+          Each slide becomes a chapter. Scroll to navigate, while foreground
+          elements move at different speeds, creating a cinematic effect.
+        </p>
+        <div class="bullet-points">
+          <span>✔ Scroll-based navigation</span>
+          <span>✔ Multiple depth layers</span>
+          <span>✔ Fully responsive layout</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide" id="slide-3" data-bg="#040612">
+      <div class="parallax">
+        <div class="layer layer-back gradient" data-speed="0.15"></div>
+
+        <img
+          src="https://images.pexels.com/photos/572897/pexels-photo-572897.jpeg?auto=compress&cs=tinysrgb&w=1200"
+          alt="Landscape"
+          class="layer layer-mid"
+          data-speed="0.3"
+        />
+
+        <img
+          src="https://images.pexels.com/photos/2049422/pexels-photo-2049422.jpeg?auto=compress&cs=tinysrgb&w=800"
+          alt="Silhouette"
+          class="layer layer-front"
+          data-speed="0.6"
+        />
+      </div>
+
+      <div class="slide-content">
+        <p class="eyebrow">Journey</p>
+        <h1>A layered experience</h1>
+        <p class="description">
+          Mix photography, illustrations, and text layers. Animate them smoothly
+          using simple JavaScript and CSS transforms.
+        </p>
+        <div class="buttons">
+          <a href="#slide-1" class="btn ghost">Back to Start</a>
+          <a href="#slide-4" class="btn primary">Work With Us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide" id="slide-4" data-bg="#05040d">
+      <div class="parallax">
+        <div class="layer layer-back gradient-2" data-speed="0.1"></div>
+
+        <img
+          src="https://images.pexels.com/photos/1323712/pexels-photo-1323712.jpeg?auto=compress&cs=tinysrgb&w=1200"
+          alt="City night"
+          class="layer layer-mid"
+          data-speed="0.25"
+        />
+      </div>
+
+      <div class="slide-content">
+        <p class="eyebrow">Contact</p>
+        <h1>Let’s build your scene</h1>
+        <p class="description">
+          Tell us about your idea and we’ll turn it into a vibrant, animated
+          hero header with custom visuals and interactions.
+        </p>
+
+        <form class="contact-form" onsubmit="return false">
+          <div class="field-row">
+            <input type="text" placeholder="Name" required />
+            <input type="email" placeholder="Email" required />
+          </div>
+          <textarea placeholder="Tell us about your project..." required></textarea>
+          <button class="btn primary" type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <span>© 2025 CloudDream Studio</span>
+    <span>Built with pure HTML, CSS & JS</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
